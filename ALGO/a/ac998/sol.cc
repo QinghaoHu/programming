@@ -27,32 +27,40 @@
 using namespace std;
 using ll = long long;
 
-const int INF = 0x3f3f3f3f;
+int calc(int bit, int now, vector<pair<string, int> > door) {
+    for (int i = 0; i < door.size(); ++ i) {
+        int x = door[i].second >> bit & 1;
+        if (door[i].first == "AND") now &= x;
+        else if (door[i].first == "XOR") now ^= x;
+        else now |= x;
+
+    }
+    return now;
+}
 
 void solve() {
-    int n;
-    cin >> n;
-    vector<vector<int> > weight(n, vector<int> (n, 0));
+    int n, m;
+    cin >> n >> m;
+    vector<pair<string, int> > door(n);
     for (int i = 0; i < n; ++ i) {
-        for (int j = 0; j < n; ++ j) {
-            cin >> weight[i][j];
+        string str; 
+        int x;
+        cin >> str >> x;
+        door[i] = {str, x};
+    }
+    int val = 0, ans = 0;
+    for (int bit = 29; bit >= 0; --bit) {
+        int res0 = calc(bit, 0, door);
+        int res1 = calc(bit, 1, door);
+        if (val + (1 << bit) <= m && res0 < res1) {
+            val += (1 << bit);
+            ans += res1 << bit;
+        }   else {
+            ans += res0 << bit;
         }
     }
-    int dp[1 << n][n];
-    memset(dp, 0x3f, sizeof dp);
-    dp[1][0] = 0;
-    for (int i = 0; i < 1 << n; ++ i) {
-        for (int j = 0; j < n; ++ j) {
-            if (i >> j & 1) {
-                for (int k = 0; k < n; ++ k) {
-                    if ((i - (1 << j)) >> k & 1) {
-                        dp[i][j] = min(dp[i][j], dp[i - (1 << j)][k] + weight[k][j]);
-                    }
-                }
-            }
-        }
-    }
-    cout << dp[(1 << n) - 1][n - 1] << endl;
+    cout << ans << endl;
+
 }
 
 int main() {
@@ -76,5 +84,3 @@ int main() {
  * WRITE STUFF DOWN
  * DON'T GET STUCK ON ONE APPROACH
  */
-
-

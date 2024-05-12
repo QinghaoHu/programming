@@ -27,32 +27,28 @@
 using namespace std;
 using ll = long long;
 
-const int INF = 0x3f3f3f3f;
+int qmi(int a, int b, int m) {
+    int ans = 1;
+    for (; b; b >>= 1) {
+        if (b & 1) {
+            ans = (ll)(ans * a) % m;
+        }
+        a = (ll)(a * a) % m;
+    }
+    return ans;
+}
 
 void solve() {
-    int n;
-    cin >> n;
-    vector<vector<int> > weight(n, vector<int> (n, 0));
+    int m, n;
+    cin >> m >> n;
+    ll ans = 0;
     for (int i = 0; i < n; ++ i) {
-        for (int j = 0; j < n; ++ j) {
-            cin >> weight[i][j];
-        }
+        int a, b;
+        cin >> a >> b;
+        ans = (ll)(ans + qmi(a, b, m)) % m;
+        cout << "->" << qmi(a, b, 1000) << endl;
     }
-    int dp[1 << n][n];
-    memset(dp, 0x3f, sizeof dp);
-    dp[1][0] = 0;
-    for (int i = 0; i < 1 << n; ++ i) {
-        for (int j = 0; j < n; ++ j) {
-            if (i >> j & 1) {
-                for (int k = 0; k < n; ++ k) {
-                    if ((i - (1 << j)) >> k & 1) {
-                        dp[i][j] = min(dp[i][j], dp[i - (1 << j)][k] + weight[k][j]);
-                    }
-                }
-            }
-        }
-    }
-    cout << dp[(1 << n) - 1][n - 1] << endl;
+    cout << ans % m<< endl;
 }
 
 int main() {
@@ -60,7 +56,7 @@ int main() {
     cin.tie (nullptr);
 
     int T = 1;
-    //cin >> T;
+    cin >> T;
 
     while(T --) {
         solve();
@@ -76,5 +72,4 @@ int main() {
  * WRITE STUFF DOWN
  * DON'T GET STUCK ON ONE APPROACH
  */
-
 
