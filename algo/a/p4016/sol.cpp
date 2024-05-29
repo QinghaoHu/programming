@@ -28,7 +28,29 @@ using namespace std;
 using ll = long long;
 
 void solve() {
-    
+	int n;
+	cin >> n;
+	int total = 0;
+	vector<int> a(n, 0);
+	for (int &i : a) {
+		cin >> i;
+		total += i;
+	}
+	int avg = total / n;
+	for (int &i : a) {
+		i -= avg;
+	}
+	vector<int> s(n, 0);
+	s[0] = a[0];
+	for (int i = 1; i < n; i++) {
+		s[i] = s[i - 1] + a[i];
+	}
+	sort(s.begin(), s.end());
+	int ans = 0;
+	for (int i = 0; i < n; i++) {
+		ans += abs((s[i] - s[n / 2]));
+	}
+	cout << ans << endl;
 }
 
 int main() {
