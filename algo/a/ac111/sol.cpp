@@ -32,13 +32,29 @@ using ll = long long;
 void solve() {
     int n;
     cin >> n;
-    vector<pair<pair<int, int>, int> > a(n);
-    int cnt = 1;
+    vector<pair<pair<int, int>, int > > a(n);
+    int cnt = 0;
     for (auto &i : a) {
         cin >> i.f.f >> i.f.s;
         i.s = cnt++;
     }
-    
+    vector<int> pos(n, 0);
+    sort (a.begin(), a.end());
+    priority_queue<pair<int, int>, vector<pair<int, int> > , greater<pair<int, int> > > myq;
+    for (auto s : a) {
+        if (myq.empty() || myq.top().f >= s.f.f) {
+            pos[s.s] = myq.size() + 1;
+            myq.push({s.f.s, myq.size() + 1});
+        } else {
+            pos[s.s] = myq.top().s;
+            myq.pop();
+            myq.push({s.f.s, pos[s.s]});
+        }
+    }
+    cout << myq.size() << endl;
+    for (int i : pos) {
+        cout << i << endl;
+    }
 }
 
 int main() {
