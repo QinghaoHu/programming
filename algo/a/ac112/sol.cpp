@@ -1,3 +1,4 @@
+#pragma GCC optimize (2)
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -47,7 +48,13 @@ void solve() {
     }
     sort(pos.begin(), pos.end());
     int ans = 0; double last = -1500;
-
+    for (auto s : pos) {
+        if (s.s > last + eps) {
+            ans ++;
+            last = s.f;
+        }
+    }
+    cout << ans << endl;
 }
 
 int main() {
