@@ -23,11 +23,30 @@
 #include <cctype>
 #include <ctime>
 #include <climits>
+#define f first
+#define s second
 
 using namespace std;
 using ll = long long;
 
+const double eps = 1e-8;
+
 void solve() {
+    int n; double d;
+    cin >> n >> d;
+    vector<pair<double, double> > pos(n);
+    for (auto &s : pos) {
+        double x, y;
+        cin >> x >> y;
+        double len = sqrt(d * d - y * y);
+        if (y > d) {
+            cout << -1 << endl;
+            exit(0);
+        }
+        s = {x + len, x - len};
+    }
+    sort(pos.begin(), pos.end());
+    int ans = 0; double last = -1500;
 
 }
 
