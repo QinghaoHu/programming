@@ -86,8 +86,13 @@ void solve() {
     int l = 0, r = 10010;
     while(l < r) {
         int mid = l + r >> 1;
-
+        if (check(mid, points)) {
+            r = l;
+        } else {
+            l = mid + 1;
+        }
     }
+    cout << r << endl;
 }
 
 int main() {
