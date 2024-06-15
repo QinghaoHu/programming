@@ -28,24 +28,30 @@ using namespace std;
 using ll = long long;
 
 void solve() {
-    int avg = 0, n;
-    cin >> n;
-    vector<int> a(n + 1, 0);
-    for (int i = 0; i <= n; i++) {
-        cin >> a[i];
-        avg += a[i];
-    }
-    avg /= n;
-    for (int i = 0; i < n; i++) {
-        a[i] -= avg;
-    }
-    int js = 0;
-    for (int i = 0; i < n; i++) {
-        if (a[i] == 0) continue;
-        a[i + 1] += a[i];
-        js++;
-    }
-    cout << js << endl;
+	int n;
+	cin >> n;
+	vector<ll> a(n, 0);
+	ll avg = 0;
+	for (auto &i : a) {
+		cin >> i;
+		avg += i;
+	}
+	avg /= n;
+	for (auto &i : a) {
+		i -= avg;
+	}
+	vector<ll> s(n, 0);
+	s[0] = a[0];
+	for (int i = 1; i < n; i++) {
+		s[i] = s[i - 1] + a[i];
+	}
+	vector<ll> b = s;
+	sort(b.begin(), b.end());
+	ll ans = 0;
+	for (int i = 0; i < n; i++) {
+		ans += abs(s[i] - b[n / 2]);
+	}
+	cout << ans << endl;
 }
 
 int main() {
