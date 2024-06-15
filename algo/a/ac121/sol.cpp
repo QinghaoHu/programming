@@ -104,4 +104,5 @@ int main() {
  * do smth instead of nothing and stay organized
  * WRITE STUFF DOWN
  * DON'T GET STUCK ON ONE APPROACH
+<<<<<<< HEAD
  */
