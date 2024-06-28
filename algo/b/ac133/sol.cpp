@@ -42,7 +42,7 @@ const db eps = 1e-9;
 const int INF = 0x3f3f3f3f;
 
 void solve() {
-    int n, m, q, u, v, d;
+    ll n, m, q, u, v, d;
     cin >> n >> m >> q >> u >> v >> d;
     double p = (double)u / v;
     vector<ll> a(n);
