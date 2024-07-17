@@ -26,52 +26,38 @@ const int INF = 0x3f3f3f3f;
 #define debug(x) cerr << #x << " = " << x << '\n';
 #endif
 
-const int N = 1e4 + 10;
+const int N = 2e5 + 10;
 
 int n, m;
-string s[N], es[N];
-int nxt[N];
+int a[N], b[N];
+priority_queue<int> down;
+priority_queue<int, vector<int>, greater<int> > up;
 
 void solve() {
     cin >> n >> m;
     rep(i, 1, n + 1) {
-        cin >> s[i];
-        s[i] = " " + s[i];
-    }
-    nxt[1] = 0;
-    int j = 0;
-    rep(i, 2, n + 1) {
-        while (j > 0 && s[j + 1] != s[i]) {
-            j = nxt[j];
-        }
-        if (s[j + 1] == s[i]) {
-            j++;
-        }
-        nxt[i] = j;
-    }
-    int k = n - nxt[n];
-    rep(i, 1, m + 1) {
-        rep(j, 1, k + 1) {
-            es[i] += s[j][i];
-        }
+        cin >> a[i];
     }
     rep(i, 1, m + 1) {
-        s[i] = es[i];
+        cin >> b[i];
     }
-    j = 0;
-    memset(nxt, 0, sizeof nxt);
-    rep(i, 2, m + 1) {
-        while (j > 0 && s[j + 1] != s[i]) {
-            j = nxt[j];
+    int j = 1;
+    rep(i, 1, n + 1) {
+        up.push(a[i]);
+        while (up.size() && down.size() && up.top() < down.top()) {
+            int t = up.top();
+            up.pop();
+            up.push(down.top());
+            down.pop();
+            down.push(t);
         }
-        if (s[j + 1] == s[i]) {
+        while(b[j] == i) {
+            cout << up.top() << endl;
+            down.push(up.top());
+            up.pop();
             j++;
         }
-        nxt[i] = j;
     }
-    int ans = m - nxt[m];
-    ans *= k;
-    cout << ans << endl;
 }
 
 int main() {

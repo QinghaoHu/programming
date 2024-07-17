@@ -26,52 +26,44 @@ const int INF = 0x3f3f3f3f;
 #define debug(x) cerr << #x << " = " << x << '\n';
 #endif
 
-const int N = 1e4 + 10;
+const int N = 1e5 + 10;
 
-int n, m;
-string s[N], es[N];
-int nxt[N];
+int n, idx;
+int trie[N][15];
+bool st[N];
+
+bool insertt(string str) {
+    int p = 0;
+    int len = SZ(str);
+    bool isN = false;
+    bool isF = false;
+    rep(i, 0, len) {
+        int ch = str[i] - '0';
+        if (!trie[p][ch]) {
+            trie[p][ch] = ++idx;
+            isN = true;
+        }
+        p = trie[p][ch];
+        if (st[p]) isF = true;
+    }
+    st[p] = true;
+    return isN && !isF;
+}
 
 void solve() {
-    cin >> n >> m;
-    rep(i, 1, n + 1) {
-        cin >> s[i];
-        s[i] = " " + s[i];
-    }
-    nxt[1] = 0;
-    int j = 0;
-    rep(i, 2, n + 1) {
-        while (j > 0 && s[j + 1] != s[i]) {
-            j = nxt[j];
-        }
-        if (s[j + 1] == s[i]) {
-            j++;
-        }
-        nxt[i] = j;
-    }
-    int k = n - nxt[n];
-    rep(i, 1, m + 1) {
-        rep(j, 1, k + 1) {
-            es[i] += s[j][i];
+    memset(trie, 0, sizeof trie);
+    memset(st, false, sizeof st);
+    cin >> n;
+    idx = 0;
+    bool res = true;
+    string str;
+    rep(i, 0, n) {
+        cin >> str;
+        if (!insertt(str)) {
+            res = false;
         }
     }
-    rep(i, 1, m + 1) {
-        s[i] = es[i];
-    }
-    j = 0;
-    memset(nxt, 0, sizeof nxt);
-    rep(i, 2, m + 1) {
-        while (j > 0 && s[j + 1] != s[i]) {
-            j = nxt[j];
-        }
-        if (s[j + 1] == s[i]) {
-            j++;
-        }
-        nxt[i] = j;
-    }
-    int ans = m - nxt[m];
-    ans *= k;
-    cout << ans << endl;
+    cout << ((!res) ? "NO" : "YES") << endl;
 }
 
 int main() {
@@ -79,7 +71,7 @@ int main() {
     cin.tie(0);
 
     int T = 1;
-    // cin >> T;
+    cin >> T;
     rep(i, 0, T) {
         solve();
     }

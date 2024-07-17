@@ -26,52 +26,58 @@ const int INF = 0x3f3f3f3f;
 #define debug(x) cerr << #x << " = " << x << '\n';
 #endif
 
-const int N = 1e4 + 10;
+const int N = 1e5 + 10;
 
 int n, m;
-string s[N], es[N];
-int nxt[N];
+ll a[N], l[N], r[N];
+bool st[N];
+priority_queue<PII, vector<PII>, greater<PII>> heap;
 
 void solve() {
     cin >> n >> m;
+    int k = 1;
     rep(i, 1, n + 1) {
-        cin >> s[i];
-        s[i] = " " + s[i];
-    }
-    nxt[1] = 0;
-    int j = 0;
-    rep(i, 2, n + 1) {
-        while (j > 0 && s[j + 1] != s[i]) {
-            j = nxt[j];
-        }
-        if (s[j + 1] == s[i]) {
-            j++;
-        }
-        nxt[i] = j;
-    }
-    int k = n - nxt[n];
-    rep(i, 1, m + 1) {
-        rep(j, 1, k + 1) {
-            es[i] += s[j][i];
+        int x;
+        cin >> x;
+        if (a[k] * x < 0) {
+            a[++k] = x;
+        } else {
+            a[k] += x;
         }
     }
-    rep(i, 1, m + 1) {
-        s[i] = es[i];
-    }
-    j = 0;
-    memset(nxt, 0, sizeof nxt);
-    rep(i, 2, m + 1) {
-        while (j > 0 && s[j + 1] != s[i]) {
-            j = nxt[j];
+    n = k;
+    ll cnt = 0, res = 0;
+    rep(i, 1, n + 1) {
+        if (a[i] > 0) {
+            cnt++;
+            res += a[i];
         }
-        if (s[j + 1] == s[i]) {
-            j++;
-        }
-        nxt[i] = j;
+        l[i] = i - 1, r[i] = i + 1;
+        heap.push(mp(abs(a[i]), i));
     }
-    int ans = m - nxt[m];
-    ans *= k;
-    cout << ans << endl;
+    auto remove = [&](int p) -> void {
+        l[r[p]] = l[p];
+        r[l[p]] = r[p];
+        st[p] = true;
+    };
+    while (cnt > m) {
+        while (st[heap.top().se]) {
+            heap.pop();
+        }
+        auto t = heap.top();
+        heap.pop();
+        int v = t.fi, p = t.se;
+        if ((l[p] != 0 && r[p] != n + 1) || a[p] > 0) {
+            cnt--;
+            res -= v;
+            int left = l[p], right = r[p];
+            a[p] += a[left] + a[right];
+            heap.push(mp(abs(a[p]), p));
+            remove(left);
+            remove(right);
+        }
+    }
+    cout << res << endl;
 }
 
 int main() {
