@@ -4,4 +4,12 @@ Caltan Number:
 Bipartite graph:
 	Acwing 152
 
+Data structure:
+DLX: Dancing Link X
+	uva1309
+	template question
+	sudoku
+
+
+
 
