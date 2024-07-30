@@ -1,0 +1,1 @@
+[{"test": "1 7\nSB....T\n1 7\nSB..#.T\n7 11\n###########\n#T##......#\n#.#.#..####\n#....B....#\n#.######..#\n#.....S...#\n###########\n8 4\n....\n.##.\n.#..\n.#..\n.#.B\n.##S\n....\n###T\n0 0\n", "correct_answers": ["Maze #1\nEEEEE\n\nMaze #2\nImpossible.\n\nMaze #3\neennwwWWWWeeeeeesswwwwwwwnNN\n\nMaze #4\nswwwnnnnnneeesssSSS"]}]
