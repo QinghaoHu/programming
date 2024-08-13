@@ -24,6 +24,7 @@ const int mod = 999971;
 const db eps = 1e-9;
 const db PI = acos(-1.0);
 const int INF = 0x3f3f3f3f;
+
 ll gcd(ll a, ll b) {return !b ? a : gcd(b, a % b);}
 ll lcm(ll a, ll b) {return a / gcd(a, b) * b;}
 
@@ -31,77 +32,42 @@ ll lcm(ll a, ll b) {return a / gcd(a, b) * b;}
 #define debug(x) cerr << #x << " = " << x << '\n';
 #endif
 
-const int N = 50000;
+const int N = 1e6 + 10;
 
-int n, a, b, c, d;
-VI p;
-vector<PII> divd;
-VI num;
+int n;
+int phi[N];
+VI prime;
 
-void get_primes(int n) {
+void primes(int n) {
     VI v(n + 1, 0);
-    for (int i = 2; i <= n; i++) {
+    rep(i, 2, n + 1) {
         if (!v[i]) {
             v[i] = i;
-            p.pb(i);
+            prime.push_back(i);
+            phi[i] = i - 1;
         }
-        for (auto j : p) {
+        for (auto j : prime) {
             if (j > v[i] || j > n / i) {
                 break;
             }
             v[i * j] = j;
+            phi[i * j] = (i % j == 0 ? phi[i] * j : phi[i] * (j - 1));
         }
     }
-}
-
-void dfs(int u, int s) {
-    if (u >= SZ(divd)) {
-        num.pb(s);
-        return;
-    }
-    for (int i = 0; i <= divd[u].se; i++) {
-        dfs(u + 1, s);
-        s *= divd[u].fi;
-    }
-    return;
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    get_primes(N);
     cin >> n;
-    while (n--) {
-        divd.clear();
-        num.clear();
-        cin >> a >> b >> c >> d;
-        int cd = d;
-        for (int i : p) {
-            int s = 0;
-            if (i > cd) {
-                break;
-            }
-            while (cd % i == 0) {
-                s++;
-                cd /= i;
-            }
-            if (s) {
-                divd.eb(mp(i, s));
-            }
-        }
-        if (cd > 1) {
-            divd.eb(mp(cd, 1));
-        }
-        dfs(0, 1);
-        int res = 0;
-        for (auto i : num) {
-            if (__gcd(a, i) == b && c / __gcd(c, i) * i == d) {
-                res++;
-            }
-        }
-        cout << res << " \n";
+    phi[1] = 1;
+    primes(n);
+    ll res = 0;
+    rep(i, 1, n + 1) {
+        res += (ll)phi[i];
     }
+    cout << res << " \n";
 
     return 0;
 }

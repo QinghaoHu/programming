@@ -32,13 +32,18 @@ ll lcm(ll a, ll b) {return a / gcd(a, b) * b;}
 #define debug(x) cerr << #x << " = " << x << '\n';
 #endif
 
+const int N = 100010;
+
+int n, m;
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    ll a, b;
-    cin >> a >> b;
-    cout << a * b / gcd(a, b) << " \n";
-    
+    cin >> n >> m;
+    rep(i, 1, n + 1) {
+        cout << i << " \n";
+    }
+
     return 0;
 }
