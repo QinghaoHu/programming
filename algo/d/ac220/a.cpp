@@ -21,21 +21,22 @@ ll gcd(ll a, ll b) {return !b ? a : gcd(b, a % b);}
 ll powmod(ll a, ll b, ll p) { ll res=1; for(;b;b>>=1){ if(b&1){ res=res*a%p;} a=a*a%p;} return res;}
 ll lcm(ll a, ll b) {return a / gcd(a, b) * b;}
 
+const int N = 1e7 + 10;
+ll st[N], phi[N], sum[N];
+VI prime;
+
 int main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
     int n;
     cin >> n;
-
-    VI st(n + 1, 0), phi(n + 1, 1);
-    VI prime, s(n + 1, 0);
-
+    
     for (int i = 2; i <= n; i++) {
         if (st[i] == 0) {
             st[i] = i;
-            phi[i] = i - 1;
             prime.pb(i);
+            phi[i] = i - 1;
         }
         for (auto j : prime) {
             if (j > st[i] || j > n / i) {
@@ -46,16 +47,16 @@ int main() {
         }
     }
 
-    rep(i, 2, n + 1) {
-        s[i] = s[i - 1] + phi[i];
+    for (int i = 2; i <= n; i++) {
+        sum[i] = sum[i - 1] + phi[i];
     }
 
     ll res = 0;
     for (auto j : prime) {
-        res += s[n / j] * 2 + 1;
+        res += sum[n / j] * 2 + 1;
     }
 
     cout << res << "\n";
-
+    
     return 0;
 }
