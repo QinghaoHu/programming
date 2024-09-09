@@ -21,16 +21,13 @@ ll gcd(ll a, ll b) {return !b ? a : gcd(b, a % b);}
 ll powmod(ll a, ll b, ll p) { ll res=1; for(;b;b>>=1){ if(b&1){ res=res*a%p;} a=a*a%p;} return res;}
 ll lcm(ll a, ll b) {return a / gcd(a, b) * b;}
 
-const int N = 100010;
 int n, m;
-vector<array<int, 3>> query;
-VI a, d, fa;
+VI a, fa;
+vector<arr<int, 3>> query;
 
 int find(int x) {
     if (x != fa[x]) {
-        int root = find(fa[x]);
-        d[x] ^= d[fa[x]];
-        fa[x] = root;
+        fa[x] = find(fa[x]);
     }
     return fa[x];
 }
@@ -49,24 +46,37 @@ int main() {
         a.pb(l - 1);
         a.pb(r);
     }
-    sort(all(a), less());
+    sort(all(a));
     a.erase(unique(all(a)), a.end());
+    for (int i : a) {
+        cerr << i << " ";
+    }
+    cerr << "\n";
+
     n = SZ(a);
-    d.assign(n + 1, 0), fa.assign(n + 1, 0);
+    fa.assign(2 * n + 1, 0);
     iota(all(fa), 0);
+
+    cerr << n << "\n";
     rep(i, 0, m) {
         int x = lower_bound(all(a), query[i][0] - 1) - a.begin();
         int y = lower_bound(all(a), query[i][1]) - a.begin();
-        int p = find(x), q = find(y);
-
-        if (p == q) {
-            if ((d[x] ^ d[y]) != query[i][2]) {
+        int x_odd = x, x_even = x + n;
+        int y_odd = y, y_even = y + n;
+        if (query[i][2] == 0) {
+            if (find(x_odd) == find(y_even)) {
+                cout << i << " \n";
+                return 0;
+            }
+            fa[find(x_odd)] = find(y_odd);
+            fa[find(x_even)] = find(y_even);
+        } else {
+            if (find(x_odd) == find(y_odd)) {
                 cout << i << "\n";
                 return 0;
             }
-        } else {
-            fa[q] = p;
-            d[q] = d[x] ^ d[y] ^ query[i][2];
+            fa[find(x_odd)] = find(y_even);
+            fa[find(x_even)] = find(y_odd);
         }
     }
     cout << m << "\n";
