@@ -62,10 +62,10 @@ int main() {
     }
 
     while (m--) {
-    	char op;
+    	int op;
     	int l, r, d;
     	cin >> op >> l >> r;
-    	if (op == 'Q') {
+    	if (op == 2) {
     		cout << prefix_sum(r) - prefix_sum(l - 1) << "\n";
     	}	else {
     		cin >> d;
