@@ -57,14 +57,15 @@ int main() {
     per(i, n, 1) {
     	int target = a[i] + 1;
     	int ans = 0, sum = 0;
-    	for (int p = (int)log2(n); p >= 0; p--) {
+    	int t = log(n) / log(2);
+    	for (int p = t; p >= 0; p--) {
     		if (ans + (1 << p) <= n && sum + c[ans + (1 << p)] < target) {
     			ans += (1 << p);
-    			sum += c[ans + (1 << p)];
+    			sum += c[ans];
     		}
     	}
     	height[i] = ans + 1;
-    	modify(ans, -1);
+    	modify(ans + 1, -1);
     }
 
     rep(i, 1, n + 1) {
