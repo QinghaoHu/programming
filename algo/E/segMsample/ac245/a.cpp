@@ -99,7 +99,7 @@ int main() {
     rep(i, 0, q) {
     	int ty;
     	cin >> ty;
-    	if (ty == 2) {
+    	if (ty == 0) {
     		int x, d;
     		cin >> x >> d;
     		change(1, 1, n, x, d);
