@@ -113,6 +113,9 @@ int main() {
         } else { // Range query
             int l, r;
             cin >> l >> r;
+            if (l > r) {
+                swap(l, r);
+            }
             auto res = query(1, 1, n, l, r); // Query the range [l, r]
             cout << res.mss << "\n"; // Output the maximum subarray sum in the range
         }
