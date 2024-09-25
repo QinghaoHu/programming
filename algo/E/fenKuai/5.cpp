@@ -31,10 +31,10 @@ ll gcd(ll a, ll b) {return !b ? a : gcd(b, a%b);}
 ll powmod(ll a, ll b, ll p) {ll res=1;for(;b;b>>=1){if(b&1){res=res*a%p;}a=a*a%p;}return res;}
 ll lcm(ll a, ll b) {return a /gcd(a,b)*b;}
 
-const int N = 50006;
-int n, q, c[N], cnt[N];
+const int N = 50010;
+int n, q, c[N], cnt[N], pos[N];
 array<int, 3> que[N];
-ll ans[N], ans2[N];
+ll ans[N], ans2[N], tmp;
 
 int main() {
     ios::sync_with_stdio(false);
@@ -44,37 +44,43 @@ int main() {
     rep(i, 1, n + 1) {
     	cin >> c[i];
     }
-    rep(i, 1, q + 1) {
+    rep(i, 0, q) {
     	int l, r;
     	cin >> l >> r;
     	que[i] = {l, r, i};
+        ans2[i] = (ll)(r - l + 1) * (r - l) / 2;
     }
-    int t = sqrt(q);
-    sort(que + 1, que + q + 1, [&](array<int, 3> a, array<int, 3> b) {
-    	if (a[2] / t != b[2] / t) {
-    		return a[0] < b[0];
-    	} 
-    	return a[1] < b[1];
+
+    int block = sqrt(5);
+    sort(que, que + q, [&](array<int, 3> a, array<int, 3> b) {
+        if (a[0] / block != b[0] / block) {
+            return a[0] / block < b[0] / block;
+        }
+        return a[1] < b[1];
     });
 
     auto add = [&](int x) {
+        tmp += cnt[c[x]];
     	cnt[c[x]]++;
-    	tmp += cnt[c[x]];
     };
 
     auto del = [&](int x) {
+        cnt[c[x]]--;
     	tmp -= cnt[c[x]];
-    	cnt[c[x]]--;
     };
 
     int l = 1, r = 0;
-    rep(i, 1, q + 1) {
+    rep(i, 0, q) {
     	while (l > que[i][0]) l--, add(l);
     	while (r < que[i][1]) r++, add(r);
-    	while (l < que[i][1]) del(l), l++;
+    	while (l < que[i][0]) del(l), l++;
     	while (r > que[i][1]) del(r), r--;
     	ans[que[i][2]] = tmp;
     	
+    }
+    rep(i, 0, q) {
+        ll d = gcd(ans[i], ans2[i]);
+        cout << ans[i] / d << "/" << ans2[i] / d << "\n";
     }
 
     return 0;
