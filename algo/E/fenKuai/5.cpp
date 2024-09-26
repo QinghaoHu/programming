@@ -51,10 +51,14 @@ int main() {
         ans2[i] = (ll)(r - l + 1) * (r - l) / 2;
     }
 
-    int block = sqrt(5);
+    int t = sqrt(n);
+    rep(i, 1, n + 1) {
+        pos[i] = (i - 1) / t + 1;
+    }
+
     sort(que, que + q, [&](array<int, 3> a, array<int, 3> b) {
-        if (a[0] / block != b[0] / block) {
-            return a[0] / block < b[0] / block;
+        if (pos[a[0]] == pos[b[0]]) {
+            return a[1] < b[1];
         }
         return a[1] < b[1];
     });
