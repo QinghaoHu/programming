@@ -102,7 +102,6 @@ void solve(int u, int s) {
 	for (auto [v, w] : e[root]) {
 		if (!del[v]) solve(v, sz[v]);
 	}
-
 }
 
 int main() {
