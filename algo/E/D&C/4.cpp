@@ -35,7 +35,7 @@ const int N = 1e5 + 10;
 
 struct node {
 	int p, x, y, z;
-} q[3 * N], lq[3 * N], rq[3 * N];
+} q[2 * N], lq[2 * N], rq[2 * N];
 
 int n, m, t, p, a[N], ans[N];
 
@@ -66,7 +66,7 @@ struct BIT {
 	}
 };
 
-BIT<int> c(N * 3);
+BIT<int> c(N * 2);
 
 void work(int lval, int rval, int st, int ed) {
 	if (st > ed) return;
