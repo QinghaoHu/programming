@@ -1,20 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N = 1010;
+#define rep(i, a, n) for (int i=a; i<n; i++)
+#define per(i, a, n) for (int i=a; i>=n; i--)
+typedef long long ll;
+typedef double db;
+typedef vector<int> VI;
+typedef pair<int, int> PII;
+const db eps = 1e-9;
+const db PI = acos(-1.0);
+const int INF = 0x3f3f3f3f;
+const ll mod = 1e9 + 7;
+ll gcd(ll a, ll b) {return !b ? a : gcd(b, a%b);}
+ll powmod(ll a, ll b, ll p) {ll res=1;for(;b;b>>=1){if(b&1){res=res*a%p;}a=a*a%p;}return res;}
+ll lcm(ll a, ll b) {return a /gcd(a,b)*b;}
+
 int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
     int n, m, x, y;
     cin >> n >> m >> x >> y;
     if (m == 1) {
 		cout << 2 * (n - x) << '\n';
-		return 0;
+		exit(0);
 	}
-	double f[N][N] {}, d[N][N] {};
+	const int N = 1010;
+	db f[N][N] {}, d[N][N];
 	
 	auto gauss = [&]() -> void {
 		for (int i = 1; i <= m; i++) {
-			double w = 1.0 / d[i][i];
+			db w = 1.0 / d[i][i];
 			d[i][i] *= w;
 			d[i][m + 1] *= w;
 			if (i == m) break;
@@ -44,7 +56,7 @@ int main() {
 			f[i][j] = d[j][m + 1];
 		}
 	}
-	cout << fixed << setprecision(10) << f[x][y] << '\n';
+	cout << fixed << setprecision(4) << f[x][y] << '\n';
 	
     return 0;
 }
