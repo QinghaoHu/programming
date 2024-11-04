@@ -15,14 +15,13 @@ ll powmod(ll a, ll b, ll p) {ll res=1;for(;b;b>>=1){if(b&1){res=res*a%p;}a=a*a%p
 ll lcm(ll a, ll b) {return a /gcd(a,b)*b;}
 
 int main() {
-    int n, m, x, y;
+	int n, m, x, y;
     cin >> n >> m >> x >> y;
     if (m == 1) {
 		cout << 2 * (n - x) << '\n';
 		exit(0);
 	}
-	const int N = 1010;
-	db f[N][N] {}, d[N][N];
+	vector f(n + 1, vector<double>(m + 1, 0)), d(m + 1, vector<double>(m + 2, 0));
 	
 	auto gauss = [&]() -> void {
 		for (int i = 1; i <= m; i++) {
@@ -56,7 +55,7 @@ int main() {
 			f[i][j] = d[j][m + 1];
 		}
 	}
-	cout << fixed << setprecision(4) << f[x][y] << '\n';
+	cout << fixed << setprecision(10) << f[x][y] << '\n';
 	
     return 0;
 }
