@@ -14,16 +14,16 @@ ll gcd(ll a, ll b) {return !b ? a : gcd(b, a%b);}
 ll powmod(ll a, ll b, ll p) {ll res=1;for(;b;b>>=1){if(b&1){res=res*a%p;}a=a*a%p;}return res;}
 ll lcm(ll a, ll b) {return a /gcd(a,b)*b;}
 
+void timeUse() {
+	cout << (db)clock() / CLOCKS_PER_SEC << " s\n";
+}
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
-    int n, m;
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= m; j++) {
-            cout << 
-        }
-    }   
+	srand(time(0));
+	cout << rand() << '\n';
     
+    timeUse();
     return 0;
 }
