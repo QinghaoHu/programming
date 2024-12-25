@@ -28,9 +28,7 @@ char a[N], b[N];
 int f[N][N] {};
 
 int main() {
-    ios::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-
+    ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     cin >> n >> m;
     rep(i, 1, n + 1) {
     	cin >> a[i];
@@ -53,6 +51,5 @@ int main() {
     	}
     }
     cout << f[n][m] << "\n";
-
     return 0;
 }
