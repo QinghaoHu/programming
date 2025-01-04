@@ -23,7 +23,7 @@ int n, m, s;
 int p, deg;
 int d[N], ver[N], a[N][N], conn[N];
 bool v[N];
-int ans;
+int ans, c[N], f[N], fx[N], fy[N];
 int tree[N][N];
 
 void prim(int root) {
@@ -84,10 +84,36 @@ void dp(int x) {
         if (tree[x][y] != 0x3f3f3f3f && !v[y]) {
             if (f[x] > tree[x][y]) {
                 f[y] = f[x];
-                fx[y] = fx[x], 
+                fx[y] = fx[x];
+                fy[y] = fy[x];
             }
+        } else {
+            f[y] = tree[x][y];
+            fx[y] = x, fy[y] = y;
+        }
+        dp(y);
+    }
+    v[x] = false;
+}
+
+bool solve() {
+    int min_val = 1 << 30, mini;
+    rep(i, 2, n + 1) {
+        if (tree[1][i] != 0x3f3f3f3f || a[1][i] == 0x3f3f3f3f) continue;
+        if (a[1][i] - a[fx[i]][fy[i]] < min_val) {
+            min_val = a[1][i] - tree[fx[i]][fy[i]];
+            mini = i;
         }
     }
+    if (min_val > 0) return false;
+    ans += min_val;
+    tree[1][mini] = tree[mini][1] = a[1][mini];
+    tree[fx[mini]][fy[mini]] = tree[fy[mini]][fx[mini]] = 0x3f3f3f3f;
+    f[mini] = a[1][mini];
+    fx[mini] = 1, fy[mini] = mini;
+    v[1] = true;
+    dp(mini);
+    return true;
 }
 
 int main(){
@@ -104,5 +130,11 @@ int main(){
         a[x][y] = a[y][x] = min(a[x][y], z);
     }
     scanf("%d", &s);
-
+    prima();
+    dp(1);
+    while (deg < s) {
+        if (!solve()) break; 
+        deg++;
+    }
+    printf("Total miles driven: %d", &ans);
 }

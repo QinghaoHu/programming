@@ -1,0 +1,26 @@
+系统
+
+x1 <= x1' + w1
+x2 <= x2' + w2
+x3 <= x3' + w3
+
+for all edges (u, v, w) 
+	if u > v + w
+		u = v + w
+
+Bellman - ford
+You can also use spfa but unnassary
+
+if you want to get non negative solution
+
+add 
+x0 - xi <= 0
+
+if you want to get the smallest solution
+see the transform
+
+u - v <= w
+-u + v >= w
+v >= w + u
+
+the art of changing algebra
