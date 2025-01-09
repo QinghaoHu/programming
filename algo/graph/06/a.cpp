@@ -21,8 +21,11 @@ void dfs(int x) {
 	stk.push(x);
 
 	for (auto v : p[x]) {
-		if (!dfn[v]) dfs(v);
-		if (ins[v]) low[x] = std::min(low[x], low[v]);
+		if (!dfn[v]) {
+			dfs(x);
+			low[x] = std::min(low[x], low[v]);
+		}
+		if (ins[v]) low[x] = std::min(low[x], dfn[v]);
 	}
 
 	if (dfn[x] == low[x]) {
