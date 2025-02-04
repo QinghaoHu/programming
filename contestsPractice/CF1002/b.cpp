@@ -20,15 +20,37 @@ void solve() {
 	std::vector<int> a(n);
 	for (int i = 0; i < n; i++) {
 		std::cin >> a[i];
-	}
+	} 
 
-	
+	if (n == k) {
+		int t = 1;
+		for (int i = 1; i < k; i += 2) {
+			if (a[i] != t) {
+				std::cout << t << '\n';
+				return;
+			} else {
+				t++;
+			}
+		} 
+		std::cout << k / 2 + 1 << '\n';
+		return;
+	} else {
+		for (int i = 1; i < n - k + 2; i++) {
+			if (a[i] != 1) {
+				std::cout << 1 << '\n';
+				return;
+			}
+		}
+	}
+	std::cout << 2 << '\n';
+	return;
 }
 
 int main() {
 	std::ios_base::sync_with_stdio(false), std::cin.tie(nullptr);
 
-	int T; std::cin >> T;
+	int T;
+	std::cin >> T;
 
 	while (T--) {
 		solve();
