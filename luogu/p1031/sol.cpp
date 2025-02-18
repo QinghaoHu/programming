@@ -1,29 +1,4 @@
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <sstream>
-#include <cstdio>
-#include <algorithm>
-#include <numeric>
-#include <functional>
-#include <vector>
-#include <array>
-#include <list>
-#include <deque>
-#include <set>
-#include <map>
-#include <unordered_set>
-#include <unordered_map>
-#include <queue>
-#include <stack>
-#include <bitset>
-#include <cmath>
-#include <cstdlib>
-#include <cstring>
-#include <cctype>
-#include <ctime>
-#include <climits>
-
+#include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
 
